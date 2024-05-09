@@ -1,0 +1,28 @@
+# 忽略 node_modules 目录
+node_modules/
+
+# 忽略生成的构建文件或目录
+dist/
+build/
+out/
+tmp/
+
+# 忽略本地配置文件
+config.js
+
+# 忽略日志文件
+*.log
+
+# 忽略编辑器的配置文件和临时文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 忽略敏感信息（如 API 密钥、密码等）
+.env
+
+# 忽略缓存文件
+.npm/
+.yarn/
+.pnpm/

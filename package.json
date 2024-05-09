@@ -1,0 +1,21 @@
+{
+  "name": "rofun",
+  "version": "0.0.1",
+  "description": "A common server application based on Express",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node scripts/test.js",
+    "fun": "node scripts/fun.js",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "author": "xieyijiang",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
