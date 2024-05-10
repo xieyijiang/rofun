@@ -4,6 +4,9 @@
   "description": "A common server application based on Express",
   "main": "app.js",
   "type": "commonjs",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "test": "node scripts/test.js",
     "fun": "node scripts/fun.js",

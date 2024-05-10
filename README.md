@@ -1,6 +1,6 @@
 # rofun
 
-rofun是一个基于 [Express](https://expressjs.com/) 的服务端应用，可根据函数文件路径自动生成对应的路由
+rofun是一个基于 [Express](https://expressjs.com/) 的服务端应用，可根据函数文件路径自动生成路由，获得类似云函数的体验
 
 [![Node.js Version](https://img.shields.io/badge/Node.js-10.0.0%2B-brightgreen.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
 
@@ -19,7 +19,7 @@ rofun是一个基于 [Express](https://expressjs.com/) 的服务端应用，可�
 npm run fun <functionPath> [template]
 ```
 
-应用在启动时会自动生成所有对应的路由
+应用在启动时会自动生成路由
 
 ## 安装和使用
 

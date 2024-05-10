@@ -30,7 +30,7 @@ function generateRoutes(directory) {
         const routePath = relativePath.replace(new RegExp(`^${functionsPath}\/?`), '').slice(0, -(extName.length));
         const { method, main } = require(fullPath);
 
-        if (Array.isArray(method)) {
+        if (Array.isArray(method) && method.length > 0) {
           method.forEach((m) => {
             app[m.toLowerCase()](`/${routePath}`, main);
           });
