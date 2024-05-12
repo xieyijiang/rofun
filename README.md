@@ -13,10 +13,15 @@ rofun是一个基于 [Express](https://expressjs.com/) 的服务端应用，可�
 | `${project}/functions/hello.js`        | `${host}/hello`        |
 | `${project}/functions/wechat/reply.js` | `${host}/wechat/reply` |
 
-只需通过脚本创建函数
+只需通过脚本创建函数，支持多级路径和函数模板
 
 ```shell
-npm run fun <functionPath> [template]
+npm run fun <functionName> [templateName]
+
+#例如
+npm run fun hello
+#或者
+npm run fun wechat/reply mysql
 ```
 
 应用在启动时会自动生成路由
@@ -44,4 +49,14 @@ npm run fun <functionPath> [template]
    npm run start
    ```
 
-   
+
+根据控制台提示即可访问应用，默认链接：http://localhost:3000
+
+## 约定
+
+- 函数放在 `functions` 文件夹下，用小驼峰式命名，例如：`getToken.js`
+- 函数模板放在 `templates` 文件夹下，用蛇形命名，例如：`mysql_pool.js`
+- 每个函数文件导出一个对象，对象至少包含两个属性，分别是名为 `method` 的**数组类型**和名为 `main` 的**函数类型**
+  - `method` 数组元素对应5种HTTP请求方法，当数组为空时，不会自动生成路由
+  - `main` 函数即为处理路由请求的主函数，没有路由时（即 `method` 为空数组）亦可作为独立函数供应用内部调用
+- 函数模板名称与实际的函数模板文件名对应，例如：函数模板文件为 `mysql_pool.js`，创建函数的命令行可以是 `npm run fun dbPool mysql_pool`，任何人都可以编写函数模板

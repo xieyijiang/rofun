@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
   res.send('Hello rofun!')
 })
 
-// 动态创建路由
+// #region 动态创建路由
 const functionsPath = 'functions'; // 函数根目录
 const extName = '.js'; // 扩展名
 const absoluteFunctionsPath = path.join(__dirname, functionsPath);
@@ -32,6 +32,7 @@ function generateRoutes(directory) {
 
         if (Array.isArray(method) && method.length > 0) {
           method.forEach((m) => {
+            // 可继续添加中间件
             app[m.toLowerCase()](`/${routePath}`, main);
           });
         }
@@ -40,7 +41,32 @@ function generateRoutes(directory) {
   });
 }
 generateRoutes(absoluteFunctionsPath)
+// #endregion
+
+// #region 初始化mysql连接池（建议在生产环境使用）
+// // 确保已经创建了返回一个连接池实例的函数，可使用模板: npm run fun customName mysql_pool
+// const functionName = 'customName'
+// const { main: initDBPool } = require(`./functions/${functionName}`);
+// // 初始化 DBPool
+// const dbPool = initDBPool()
+
+// // 应用程序关闭时，关闭连接池
+// function closeDBPool() {
+//   dbPool.end(function (err) {
+//     if (err) {
+//       console.error('Error closing database connection pool', err);
+//     } else {
+//       console.log('Database connection pool closed');
+//     }
+//     process.exit(0);
+//   })
+// }
+
+// // 监听中断信号以关闭连接池
+// process.on('SIGINT', closeDBPool);
+// process.on('SIGTERM', closeDBPool);
+// #endregion
 
 app.listen(port, () => {
-  console.log(`rofun listening on port ${port}`)
+  console.log(`rofun has started and can be accessed at http://localhost:${port}`)
 })
