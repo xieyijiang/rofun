@@ -1,13 +1,8 @@
-// {{functionName}}.js
-/**
- * 需要安装依赖：npm install --save mysql2
- * 同时确保node版本兼容
- * 例如：mysql2@3.9.7 要求 node>=8.0.0
- */
+// _functionName.js
 const mysql = require('mysql2/promise');
 
 /**
- * 每次执行都会创建一个新的实例，仅适合调试
+ * 敏感数据暴露在硬编码中，仅适合调试
  * 正式环境应使用连接池模式
  * @returns {Promise<mysql.Connection>}
  */

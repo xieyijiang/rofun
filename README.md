@@ -16,12 +16,7 @@ rofun是一个基于 [Express](https://expressjs.com/) 的服务端应用，可�
 只需通过脚本创建函数，支持多级路径和函数模板
 
 ```shell
-npm run fun <functionName> [templateName]
-
-#例如
-npm run fun hello
-#或者
-npm run fun wechat/reply mysql
+npm run fun <functionName | path/to/functionName> [template]
 ```
 
 应用在启动时会自动生成路由
@@ -43,20 +38,52 @@ npm run fun wechat/reply mysql
 3. 运行
 
    ```shell
-   #开发模式，nodemon实现热更新
+   # 开发模式，nodemon实现热更新
    npm run dev
-   #或者常规模式，无热更新
+   
+   # 或者常规模式，无热更新
    npm run start
    ```
+   
+
+根据控制台提示访问应用，默认：http://localhost:3000
+
+## 常用命令
+
+```shell
+# 创建函数
+npm run fun <functionName | path/to/functionName> [template]
+
+# 创建类/模型
+npm run mod <modelName | path/to/modelName> [template]
+
+# 创建数据库相关配置和初始代码
+npm run db [template]
+```
 
 
-根据控制台提示即可访问应用，默认链接：http://localhost:3000
+
+## 文件结构
+
+- `functions` 存放函数文件，支持多几路径
+- `scripts` 存放脚本文件，比如通过模板快速生成函数
+- `templates` 存放模板文件
+  - `function` 函数模板
+  - `model` 类/模型模板
+  - `middleware` 中间件模板
+  - `database` 数据库初始化脚本模板
+- `config` 存放配置文件，例如 mysql 的相关配置，
+- `database` 存放数据库模型或实例，例如导出 mysql 的连接池
+- `models` (非必要) 存放类/模型文件
+- `middlewares` (非必要) 存放中间件文件
+- `.env` 存放环境变量，比如token、密码等敏感数据
 
 ## 约定
 
-- 函数放在 `functions` 文件夹下，用小驼峰式命名，例如：`getToken.js`
-- 函数模板放在 `templates` 文件夹下，用蛇形命名，例如：`mysql_pool.js`
+- 函数和中间件用小驼峰式命名，例如：`functions/fetchData.js`
 - 每个函数文件导出一个对象，对象至少包含两个属性，分别是名为 `method` 的**数组类型**和名为 `main` 的**函数类型**
   - `method` 数组元素对应5种HTTP请求方法，当数组为空时，不会自动生成路由
-  - `main` 函数即为处理路由请求的主函数，没有路由时（即 `method` 为空数组）亦可作为独立函数供应用内部调用
-- 函数模板名称与实际的函数模板文件名对应，例如：函数模板文件为 `mysql_pool.js`，创建函数的命令行可以是 `npm run fun dbPool mysql_pool`，任何人都可以编写函数模板
+  - `main` 函数即为处理路由请求的主函数，没有路由时（即 `method` 为空数组）亦可作为独立函数在内部调用
+- 模板用蛇形命名，例如：`templates/function/.js`
+- 模板文件中需要替换的占位变量名用 `_` 作前缀，例如：`_functionName`
+- 类/模型用大驼峰式命名，例如：`models/User.js`

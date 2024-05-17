@@ -1,10 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const _ = require('lodash');
 
 // 获取命令行参数
-const functionName = process.argv[2];
+const modelName = process.argv[2];
+const instanceName = _.camelCase(modelName);
 const templateName = process.argv[3] || 'default'; // 例如 'mysql'
-const templatesDir = path.join(__dirname, '..', 'templates/function'); // templates文件夹的路径
+const templatesDir = path.join(__dirname, '..', 'templates/model'); // templates文件夹的路径
 
 // 构建模板文件的路径
 const templatePath = path.join(templatesDir, `${templateName}.js`);
@@ -19,8 +21,8 @@ if (!fs.existsSync(templatePath)) {
 let defaultCode = fs.readFileSync(templatePath, 'utf-8');
 
 // 创建目录和文件
-const directoryParts = functionName.split('/');
-const directory = path.join(__dirname, '..', 'functions', ...directoryParts.slice(0, -1));
+const directoryParts = modelName.split('/');
+const directory = path.join(__dirname, '..', 'models', ...directoryParts.slice(0, -1));
 const filename = directoryParts.slice(-1)[0] + '.js';
 const filePath = path.join(directory, filename);
 
@@ -39,7 +41,13 @@ if (fs.existsSync(filePath)) {
   console.log(`文件 ${filePath} 已经存在`);
 } else {
   // 替换模板中的占位符
-  defaultCode = defaultCode.replace(/_functionName/g, functionName);
+  defaultCode = defaultCode.replace(/_ModelName|_instanceName/g, function (match) {
+    if (match === '_ModelName') {
+      return modelName
+    } else if (match === '_instanceName') {
+      return instanceName
+    }
+  });
 
   // 创建文件并写入代码
   fs.writeFileSync(filePath, defaultCode);

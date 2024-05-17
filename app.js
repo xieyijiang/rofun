@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -43,23 +44,17 @@ function generateRoutes(directory) {
 generateRoutes(absoluteFunctionsPath)
 // #endregion
 
-// #region 初始化mysql连接池（建议在生产环境使用）
-// // 确保已经创建了返回一个连接池实例的函数，可使用模板: npm run fun customName mysql_pool
-// const functionName = 'customName'
-// const { main: initDBPool } = require(`./functions/${functionName}`);
-// // 初始化 DBPool
-// const dbPool = initDBPool()
-
-// // 应用程序关闭时，关闭连接池
-// function closeDBPool() {
-//   dbPool.end(function (err) {
-//     if (err) {
-//       console.error('Error closing database connection pool', err);
-//     } else {
-//       console.log('Database connection pool closed');
-//     }
+// #region 进程关闭前关闭mysql连接池(可选的)
+// const mysqlPool = require('./database/mysql');
+// async function closeDBPool() {
+//   try {
+//     await mysqlPool.end()
+//     console.log('Database connection pool closed');
+//   } catch (err) {
+//     console.error('Error closing database connection pool', err);
+//   } finally {
 //     process.exit(0);
-//   })
+//   }
 // }
 
 // // 监听中断信号以关闭连接池
