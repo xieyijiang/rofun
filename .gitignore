@@ -1,6 +1,9 @@
 # 忽略 node_modules 目录
 node_modules/
 
+# 忽略 package-lock.json 文件
+package-lock.json
+
 # 忽略生成的构建文件或目录
 dist/
 build/
@@ -9,7 +12,6 @@ tmp/
 
 # 忽略本地配置文件
 config.js
-package-lock.json
 
 # 忽略日志文件
 *.log
