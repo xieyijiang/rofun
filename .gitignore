@@ -29,3 +29,9 @@ config.js
 .npm/
 .yarn/
 .pnpm/
+
+# 忽略可选文件
+config
+databases
+transports
+handlers

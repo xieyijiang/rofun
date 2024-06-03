@@ -12,17 +12,23 @@
     "fun": "node scripts/fun.js",
     "mod": "node scripts/mod.js",
     "db": "node scripts/db.js",
+    "tpt": "node scripts/tpt.js",
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
   "author": "xieyijiang",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mqtt": "^5.6.0",
-    "mysql2": "^3.9.7"
+    "mysql2": "^3.9.7",
+    "nanoid": "^3.3.7",
+    "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

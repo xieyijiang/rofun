@@ -5,7 +5,7 @@
  * 引用路径可自行更改为相对路径
  */
 const rootDir = process.cwd();
-const mysqlPool = require(`${rootDir}/database/mysql`);
+const mysqlPool = require(`${rootDir}/databases/mysql`);
 
 module.exports = {
   method: ['GET', 'POST'], // ['PUT', 'DELETE', 'PATCH']

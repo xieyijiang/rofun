@@ -4,9 +4,10 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express()
+const router = express.Router()
 const port = 3000
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.send('Hello rofun!')
 })
 
@@ -34,7 +35,7 @@ function generateRoutes(directory) {
         if (Array.isArray(method) && method.length > 0) {
           method.forEach((m) => {
             // 可继续添加中间件
-            app[m.toLowerCase()](`/${routePath}`, main);
+            router[m.toLowerCase()](`/${routePath}`, main);
           });
         }
       }
@@ -44,7 +45,7 @@ function generateRoutes(directory) {
 generateRoutes(absoluteFunctionsPath)
 // #endregion
 
-// #region 进程关闭前关闭mysql连接池(可选的)
+// #region (可选) 进程关闭前关闭mysql连接池
 // const mysqlPool = require('./database/mysql');
 // async function closeDBPool() {
 //   try {
@@ -61,6 +62,34 @@ generateRoutes(absoluteFunctionsPath)
 // process.on('SIGINT', closeDBPool);
 // process.on('SIGTERM', closeDBPool);
 // #endregion
+
+// #region (可选) 使用 socket.io 时需要使用 http 模块
+// const server = require('http').createServer(app);
+// const { Server } = require('socket.io');
+// const io = new Server(server, {
+//   cors: {
+//     origin: "http://localhost:5173"
+//   }
+// });
+
+// const onConnection = (socket) => {
+//   // custom handlers...
+//   console.log(`socket ${socket.id} connected!`)
+//   socket.on('disconnect', (reason) => {
+//     console.log(`${socket.id} disconnected, reason: ${reason}`)
+//   })
+// }
+
+// io.on('connection', onConnection);
+
+// server.listen(port, () => {
+//   console.log(`rofun has started and can be accessed at http://localhost:${port}`)
+// });
+// #endregion
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use('/', router);
 
 app.listen(port, () => {
   console.log(`rofun has started and can be accessed at http://localhost:${port}`)
