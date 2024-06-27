@@ -35,4 +35,5 @@ config
 databases
 transports
 handlers
+middlewares
 models

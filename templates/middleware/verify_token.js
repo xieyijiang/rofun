@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const _middlewareName = (req, res, next) => {
   // 从请求头中获取 token
-  const token = req.header('Authorization')?.split(' ')[1];
+  const token = req.header('Authorization')?.split(' ')[1]; // Bearer token
   if (!token) {
     return res.status(401).json({ message: 'Access Denied. No Token Provided.' });
   }

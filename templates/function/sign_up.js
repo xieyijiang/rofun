@@ -4,6 +4,10 @@ const mysqlPool = require('@/databases/mysql');
 
 module.exports = {
   method: ['POST'],
+  middleware: {
+    global: [],
+    post: []
+  },
   // 主函数
   main: async function (req, res) {
     const { username, password } = req.body

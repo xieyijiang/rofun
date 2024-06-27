@@ -9,10 +9,12 @@
   },
   "_moduleAliases": {
     "@": ".",
-    "@config": "./config"
+    "@config": "./config",
+    "@mw": "./middlewares"
   },
   "scripts": {
     "add:fun": "node scripts/fun.js",
+    "add:mid": "node scripts/mid.js",
     "add:mod": "node scripts/mod.js",
     "add:hdlr": "node scripts/hdlr.js",
     "add:db": "node scripts/db.js",

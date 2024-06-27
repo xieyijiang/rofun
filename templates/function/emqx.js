@@ -4,6 +4,11 @@ const config = require('@config/emqx_config');
 
 module.exports = {
   method: ['GET', 'POST'], // ['PUT', 'DELETE', 'PATCH']
+  middleware: {
+    global: [],
+    get: [],
+    post: []
+  },
   // 主函数
   main: async function (req, res) {
     try {

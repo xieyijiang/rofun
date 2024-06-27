@@ -70,6 +70,9 @@ npm run add:fun wechat/reply
 # 创建函数
 npm run add:fun <name | path> [template]
 
+# 创建中间件
+npm run add:mid <name | path> [template]
+
 # 创建类/模型
 npm run add:mod <name | path> [template]
 
@@ -108,8 +111,9 @@ npm run add:tpt [template]
 ## 约定
 
 - 函数、中间件、处理器用小驼峰式命名，例如：`functions/fetchData.js`
-- 每个函数文件导出一个对象，对象至少包含两个属性，分别是名为 `method` 的**数组类型**和名为 `main` 的**函数类型**
+- 每个函数文件导出一个对象，对象至少包含三个属性，分别是名为 `method` 的**数组类型**，名为 `middleware` 的**对象类型**和名为 `main` 的**函数类型**
   - `method` 数组元素对应5种HTTP请求方法，当数组为空时，不会自动生成路由
+  - `middleware` 包含至少1个名为 `global` 的数组类型属性，代表在这条路由上使用的全局中间件，此外可以指定各个 `method` 单独使用的中间件，例如: `post: ['auth', ...]`，所有属性均可为空数组，代表不使用任何中间件
   - `main` 函数即为处理路由请求的主函数，没有路由时（即 `method` 为空数组）亦可作为独立函数在内部调用
 - 模板用蛇形命名，例如：`templates/function/demo_template.js`
 - 模板文件中需要替换的占位变量名用 `_` 作前缀，例如：`_functionName`

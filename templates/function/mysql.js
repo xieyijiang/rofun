@@ -8,6 +8,11 @@ const mysqlPool = require('@/databases/mysql');
 
 module.exports = {
   method: ['GET', 'POST'], // ['PUT', 'DELETE', 'PATCH']
+  middleware: {
+    global: [],
+    get: [],
+    post: []
+  },
   // 主函数
   main: async function (req, res) {
     const conn = await mysqlPool.getConnection();
