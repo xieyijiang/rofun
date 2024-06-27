@@ -1,34 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 
-const mqttConfigContent =
+const emqxConfigContent =
 `module.exports = {
-  host: process.env.MQTT_HOST,
-  port: process.env.MQTT_PORT,
-  username: process.env.MQTT_USERNAME,
-  password: process.env.MQTT_PASSWORD,
-  clientId: 'rofun_' + Math.random().toString(16).slice(2, 10)
+  host: process.env.EMQX_HOST,
+  port: process.env.EMQX_PORT,
+  apiKey: process.env.EMQX_API_KEY,
+  secretKey: process.env.EMQX_SECRET_KEY,
 };`;
 
-const mqttContent = 
-`const mqtt = require("mqtt");
-const config = require('@config/mqtt_config');
-
-const client = mqtt.connect(config);
-
-module.exports = client;`;
-
 const envContent =
-`MQTT_HOST="localhost"
-MQTT_PORT=1883
-MQTT_USERNAME="admin"
-MQTT_PASSWORD="password"`;
+`EMQX_API_KEY="your emqx apiKey"
+EMQX_SECRET_KEY="your emqx secretKey"`;
 
 // 文件路径
-const mqttConfigDirectory = path.join(__dirname, '../../config');
-const mqttConfigPath = path.join(mqttConfigDirectory, 'mqtt_config.js');
-const mqttDirectory = path.join(__dirname, '../../transports');
-const mqttPath = path.join(mqttDirectory, 'mqtt.js');
+const emqxConfigDirectory = path.join(__dirname, '../../config');
+const emqxConfigPath = path.join(emqxConfigDirectory, 'emqx_config.js');
 const envPath = path.join(__dirname, '../../.env');
 
 function ensureDir(dirPath) {
@@ -65,12 +52,10 @@ function checkAndWriteFile(filePath, content) {
 
 function run() {
   // 确保所有父目录都存在
-  ensureDir(mqttConfigDirectory);
-  ensureDir(mqttDirectory);
+  ensureDir(emqxConfigDirectory);
 
   // 检查并写入文件
-  checkAndWriteFile(mqttConfigPath, mqttConfigContent);
-  checkAndWriteFile(mqttPath, mqttContent);
+  checkAndWriteFile(emqxConfigPath, emqxConfigContent);
   checkAndWriteFile(envPath, envContent);
 }
 

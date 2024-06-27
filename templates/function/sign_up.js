@@ -1,7 +1,6 @@
 // _functionName.js
 const bcrypt = require('bcrypt');
-const rootDir = process.cwd();
-const mysqlPool = require(`${rootDir}/databases/mysql`);
+const mysqlPool = require('@/databases/mysql');
 
 module.exports = {
   method: ['POST'],

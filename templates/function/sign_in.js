@@ -1,8 +1,7 @@
 // _functionName.js
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const rootDir = process.cwd();
-const mysqlPool = require(`${rootDir}/databases/mysql`);
+const mysqlPool = require('@/databases/mysql');
 
 module.exports = {
   method: ['POST'],

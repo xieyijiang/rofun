@@ -4,8 +4,7 @@
  * 可使用命令快速创建 npm run db
  * 引用路径可自行更改为相对路径
  */
-const rootDir = process.cwd();
-const mysqlPool = require(`${rootDir}/databases/mysql`);
+const mysqlPool = require('@/databases/mysql');
 
 module.exports = {
   method: ['GET', 'POST'], // ['PUT', 'DELETE', 'PATCH']

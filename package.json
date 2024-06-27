@@ -7,24 +7,30 @@
   "engines": {
     "node": ">=10.0.0"
   },
+  "_moduleAliases": {
+    "@": ".",
+    "@config": "./config"
+  },
   "scripts": {
-    "test": "node scripts/test.js",
-    "fun": "node scripts/fun.js",
-    "mod": "node scripts/mod.js",
-    "db": "node scripts/db.js",
-    "tpt": "node scripts/tpt.js",
+    "add:fun": "node scripts/fun.js",
+    "add:mod": "node scripts/mod.js",
+    "add:hdlr": "node scripts/hdlr.js",
+    "add:db": "node scripts/db.js",
+    "add:tpt": "node scripts/tpt.js",
     "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node scripts/test.js"
   },
   "author": "xieyijiang",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
+    "module-alias": "^2.2.3",
     "mqtt": "^5.6.0",
     "mysql2": "^3.9.7",
     "nanoid": "^3.3.7",

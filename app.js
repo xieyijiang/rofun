@@ -1,28 +1,36 @@
+require('module-alias/register');
 require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
-const app = express()
-const router = express.Router()
-const port = 3000
+const app = express();
+const router = express.Router();
+const port = 3000;
 
 router.get('/', (req, res) => {
-  res.send('Hello rofun!')
+  res.send('Hello rofun!');
 })
+
+// #region (可选) 跨域设置
+const cors = require('cors');
+app.use(cors({
+  origin: 'http://localhost:5173' // 允许来自 Vue 应用的请求
+}));
+// #endregion
 
 // #region 动态创建路由
 const functionsPath = 'functions'; // 函数根目录
 const extName = '.js'; // 扩展名
 const absoluteFunctionsPath = path.join(__dirname, functionsPath);
-function generateRoutes(directory) {
+function generateRoutes(directory, router) {
   fs.readdirSync(directory).forEach(file => {
     const fullPath = path.join(directory, file);
     const stat = fs.statSync(fullPath);
 
     if (stat.isDirectory()) {
       // 如果是目录，则递归调用generateRoutes
-      generateRoutes(fullPath);
+      generateRoutes(fullPath, router);
     } else {
       // 如果是文件，创建路由
       if (path.extname(file) === extName) {
@@ -42,8 +50,12 @@ function generateRoutes(directory) {
     }
   });
 }
-generateRoutes(absoluteFunctionsPath)
+generateRoutes(absoluteFunctionsPath, router)
 // #endregion
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use('/', router);
 
 // #region (可选) 进程关闭前关闭mysql连接池
 // const mysqlPool = require('./database/mysql');
@@ -63,34 +75,27 @@ generateRoutes(absoluteFunctionsPath)
 // process.on('SIGTERM', closeDBPool);
 // #endregion
 
-// #region (可选) 使用 socket.io 时需要使用 http 模块
-// const server = require('http').createServer(app);
-// const { Server } = require('socket.io');
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:5173"
-//   }
-// });
+// #region (可选) mqtt初始化，需预创建相关逻辑 (实例, 模型, 处理器)
+// npm run add:tpt mqtt && npm run add:mod MQTT mqtt && npm run add:hdlr mqttHandler mqtt 
+const MQTTModel = require('./models/MQTT');
 
-// const onConnection = (socket) => {
-//   // custom handlers...
-//   console.log(`socket ${socket.id} connected!`)
-//   socket.on('disconnect', (reason) => {
-//     console.log(`${socket.id} disconnected, reason: ${reason}`)
-//   })
-// }
-
-// io.on('connection', onConnection);
-
-// server.listen(port, () => {
-//   console.log(`rofun has started and can be accessed at http://localhost:${port}`)
-// });
+const mqtt = new MQTTModel();
+mqtt.run();
 // #endregion
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use('/', router);
+// #region (可选) socket.io初始化，与app.listen冲突，需预创建相关逻辑 (模型, 处理器)
+// npm run add:mod SocketIO socket_io && npm run add:hdlr socketIOHandler socket_io
+const server = require('http').createServer(app);
+const SocketIOModel = require('./models/SocketIO');
 
-app.listen(port, () => {
+const socketIO = new SocketIOModel(server);
+socketIO.run();
+
+server.listen(port, () => {
   console.log(`rofun has started and can be accessed at http://localhost:${port}`)
-})
+});
+// #endregion
+
+// app.listen(port, () => {
+//   console.log(`rofun has started and can be accessed at http://localhost:${port}`);
+// })
