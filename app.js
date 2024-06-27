@@ -26,6 +26,7 @@ const extName = '.js'; // 扩展名
 const absoluteFunctionsPath = path.join(__dirname, functionsPath);
 const absoluteMiddlewaresPath = path.join(__dirname, middlewaresPath);
 function getMiddlewares(directory, arr = []) {
+  if (!fs.existsSync(directory)) return []
   const rootPath = path.join(__dirname, middlewaresPath);
   fs.readdirSync(directory).forEach(file => {
     const fullPath = path.join(directory, file);
@@ -119,25 +120,25 @@ app.use('/', router);
 
 // #region (可选) mqtt初始化，需预创建相关逻辑 (实例, 模型, 处理器)
 // npm run add:tpt mqtt && npm run add:mod MQTT mqtt && npm run add:hdlr mqttHandler mqtt 
-const MQTTModel = require('./models/MQTT');
+// const MQTTModel = require('./models/MQTT');
 
-const mqtt = new MQTTModel();
-mqtt.run();
+// const mqtt = new MQTTModel();
+// mqtt.run();
 // #endregion
 
 // #region (可选) socket.io初始化，与app.listen冲突，需预创建相关逻辑 (模型, 处理器)
 // npm run add:mod SocketIO socket_io && npm run add:hdlr socketIOHandler socket_io
-const server = require('http').createServer(app);
-const SocketIOModel = require('./models/SocketIO');
+// const server = require('http').createServer(app);
+// const SocketIOModel = require('./models/SocketIO');
 
-const socketIO = new SocketIOModel(server);
-socketIO.run();
+// const socketIO = new SocketIOModel(server);
+// socketIO.run();
 
-server.listen(port, () => {
-  console.log(`rofun has started and can be accessed at http://localhost:${port}`)
-});
+// server.listen(port, () => {
+//   console.log(`rofun has started and can be accessed at http://localhost:${port}`)
+// });
 // #endregion
 
-// app.listen(port, () => {
-//   console.log(`rofun has started and can be accessed at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+  console.log(`rofun has started and can be accessed at http://localhost:${port}`);
+});
