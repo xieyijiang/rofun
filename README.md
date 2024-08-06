@@ -125,9 +125,47 @@ npm run add:tpt [template]
 ## 存疑
 
 - 跨域设置需要优先执行，若执行顺序晚于某些特定程序，会导致跨域失效，有待验证
+- `bcrypt@5.1.1` 在 CentOS 7 中会报错 ` /lib64/libstdc++.so.6: version 'CXXABI_1.3.8' not found` ，降为 5.1.0 版本可行
+- 可选链操作符需要 Node.js v14.0.0或更高版本支持
 
 
 
 ## 局限性
 
 脚本和模板能快速生成代码原型，缩短 "施法前摇" ，但它并不智能，实际开发时仍然需要手动debug，往好的方面想: 一切都是可控的
+
+
+
+## 其他
+
+### nginx配置
+
+- 常用命令 (Mac)
+
+  ```shell
+  # 启动
+  sudo nginx
+  
+  # 停止
+  sudo nginx -s stop
+  
+  # 重启
+  sudo nginx -s reload
+  ```
+
+- 反向代理
+
+  ```nginx
+  # nginx.conf
+  server {
+      listen 80;
+      server_name localhost;
+  
+      location / {
+          proxy_pass http://localhost:3000;
+      }
+  }
+  ```
+
+  
+

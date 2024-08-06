@@ -29,7 +29,7 @@ module.exports = {
       // 生成其他属性
       const created_at = updated_at = Date.now()
       // 将用户信息存入数据库
-      const sql = 'INSERT INTO users (username, password, created_at, updated_at) VALUES (?, ?, ?, ?)';
+      const sql = 'INSERT INTO `users` (username, password, created_at, updated_at) VALUES (?, ?, ?, ?)';
       const [insertResult] = await conn.query(sql, [
         username,
         hashedPassword,
