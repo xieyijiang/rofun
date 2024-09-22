@@ -30,6 +30,9 @@ config.js
 .yarn/
 .pnpm/
 
+# 忽略 MacOS 自动生成的文件
+.DS_Store
+
 # 忽略可选文件
 config
 databases

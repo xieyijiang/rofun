@@ -19,5 +19,5 @@ try {
   const script = require(templatePath)
   script.run()
 } catch (err) {
-  console.log('Invalid template');
+  console.log(err);
 }
